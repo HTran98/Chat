@@ -1,0 +1,103 @@
+<div class="main-container">
+  <div class="sidebar">
+    <div class="search-box">
+      <input
+        type="text"
+        placeholder="Search chat room..."
+        [(ngModel)]="roomNameKey"
+        (keydown.enter)="findRomByName()"
+      />
+      <button (click)="openDialog()">Create room</button>
+    </div>
+
+    <div class="chat-rooms">
+      <h4>Chat room list</h4>
+      <!-- <ul *ngIf="chatRooms.length > 0">
+        <li *ngFor="let room of chatRooms" (click)="chooseRoom(room?.roomId)">
+          {{ room?.roomName }}
+        </li>
+      </ul> -->
+      <ul *ngIf="chatRooms.length > 0">
+        <li
+          *ngFor="let room of paginatedRooms"
+          (click)="chooseRoom(room?.roomId)"
+        >
+          {{ room?.roomName }}
+        </li>
+      </ul>
+      <!-- PAGINATION CONTROL -->
+      <div class="pagination-controls" *ngIf="totalPages > 1">
+        <button (click)="prevPage()" [disabled]="currentPage === 1">
+          Previous
+        </button>
+        <span>{{ currentPage }} / {{ totalPages }}</span>
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages">
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="chat-container" *ngIf="curentRoomId">
+    <div class="chat-header">
+      <h3>Chat</h3>
+    </div>
+    <div class="chat-messages">
+      <div
+        *ngFor="let message of messages; let i = index"
+        [ngClass]="{
+          'message-sent': isSentByCurrentUser(i),
+          'message-received': !isSentByCurrentUser(i)
+        }"
+      > 
+        <!-- {{ message.content }} -->
+          <!-- TÊN NGƯỜI GỬI -->
+    <div class="sender-name" *ngIf="checkShow(i)">{{ message.senderName }}</div>
+    
+    <!-- NỘI DUNG TIN NHẮN -->
+    <div class="message-content" *ngIf="message.content">{{ message.content }}</div>
+    <div class="message-content" *ngIf="message.fileName"  [ngClass]="{
+      'file-upload-success': message.urlDowload,
+      'file-uploadding': !message.urlDowload
+    }"><a href="javascrip:void" (click)="dowloadFile(message.id,message.fileName)">{{ message.fileName }}</a></div>
+      </div>
+    </div>
+    <div class="chat-input">
+      <input
+        type="text"
+        [(ngModel)]="newMessage"
+        (keydown.enter)="sendMessage()"
+        placeholder="Type your message here..."
+      />
+      <!-- ICON DẤU CỘNG CHO UPLOAD FILE -->
+      <div class="file-upload-icon" (click)="triggerFileUpload()">
+        <div class="plus-icon"></div>
+      </div>
+
+      <input
+        id="file-input"
+        type="file"
+        (change)="uploadFile($event)"
+        style="display: none"
+      />
+      <button class="send-btn" (click)="sendMessage()">Send</button>
+    </div>
+  </div>
+</div>
+<!-- Popup đăng ký room -->
+<div *ngIf="showPopup" class="room-popup">
+  <h2>Create Room</h2>
+  <form (submit)="registerRoom()">
+    <label for="roomName">Room Name:</label>
+    <input
+      type="text"
+      id="roomName"
+      [(ngModel)]="roomName"
+      name="roomName"
+      required
+    />
+    <div class="popup-buttons">
+      <button type="submit">Đăng ký</button>
+      <button type="button" (click)="closeDialog()">Hủy</button>
+    </div>
+  </form>
+</div>

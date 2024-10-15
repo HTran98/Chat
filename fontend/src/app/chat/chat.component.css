@@ -1,0 +1,306 @@
+.main-container {
+  display: flex; /* Sử dụng flex để chia không gian cho sidebar và chat */
+  height: 100%; /* Chiều cao tổng thể của ứng dụng chat */
+  width: 100%;
+}
+
+.sidebar {
+  width: 250px; /* Chiều rộng khung bên trái */
+  background-color: #f1f1f1; /* Màu nền cho khung bên trái */
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.search-box input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.chat-rooms {
+  margin-top: 20px;
+  max-height: 80dvh; 
+  overflow-y: auto;
+}
+
+.chat-rooms h4 {
+  margin-bottom: 10px;
+}
+
+.chat-rooms ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.chat-rooms li {
+  padding: 8px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 5px;
+  cursor: pointer; /* Thay đổi con trỏ khi hover */
+}
+
+.chat-rooms li:hover {
+  background-color: #e2e2e2; /* Màu nền khi hover */
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Cho phép khung chat mở rộng để chiếm không gian còn lại */
+  border-left: 1px solid #ddd; /* Đường viền giữa sidebar và chat */
+  background-color: #f9f9f9;
+  margin-top: 20px;
+  max-height: 98dvh; 
+  overflow-y: auto;
+}
+
+.chat-header {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  text-align: center;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.chat-messages {
+  flex-grow: 1;
+  padding: 10px;
+  overflow-y: auto;
+  background-color: #fff;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Định dạng các tin nhắn */
+.message-sent {
+  align-self: flex-end; /* Canh phải cho tin nhắn gửi đi */
+  background-color: #d1e7dd;
+  color: #0f5132;
+  padding: 8px;
+  border-radius: 15px;
+  margin: 5px;
+  max-width: 30%;
+  word-wrap: break-word; /* Đảm bảo nội dung không tràn ra ngoài */
+}
+
+.message-received {
+  align-self: flex-start; /* Canh trái cho tin nhắn nhận được */
+  background-color: #f8d7da;
+  color: #842029;
+  padding: 8px;
+  border-radius: 15px;
+  margin: 5px;
+  max-width: 30%;
+  word-wrap: break-word;
+}
+
+/* Giữ nguyên phần input và nút gửi */
+.chat-input {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #f1f1f1;
+}
+
+.chat-input input {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.file-upload-icon img {
+  width: 24px;
+  cursor: pointer;
+}
+
+.send-btn {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.send-btn:hover {
+  background-color: #0056b3;
+}
+/* Định dạng popup */
+.room-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
+}
+
+.room-popup h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.room-popup input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.popup-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.popup-buttons button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.popup-buttons button[type="button"] {
+  background-color: #ccc;
+}
+
+.popup-buttons button:hover {
+  opacity: 0.9;
+}
+
+.sidebar {
+  position: relative; /* Đặt vị trí tương đối cho phần sidebar */
+  width: 250px;
+  background-color: #f1f1f1;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.chat-rooms {
+  margin-top: 20px;
+  margin-bottom: 50px; /* Khoảng cách dưới để không chồng lên phân trang */
+}
+
+.pagination-controls {
+  position: absolute; /* Định vị tuyệt đối */
+  bottom: 20px; /* Căn phần phân trang cách đáy sidebar 20px */
+  left: 50%; /* Đặt phần phân trang vào giữa theo chiều ngang */
+  transform: translateX(-50%); /* Canh giữa theo chiều ngang */
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.pagination-controls button {
+  padding: 5px 10px;
+  margin: 0 5px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.pagination-controls button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination-controls span {
+  padding: 5px;
+}
+
+/* ICON DẤU CỘNG */
+.file-upload-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.plus-icon {
+  position: relative;
+  width: 16px;
+  height: 16px;
+}
+
+.plus-icon::before,
+.plus-icon::after {
+  content: '';
+  position: absolute;
+  background-color: #007bff;
+  width: 100%;
+  height: 3px;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.plus-icon::after {
+  transform: rotate(90deg); /* Xoay thanh ngang để tạo thành dấu cộng */
+}
+
+.send-btn {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.send-btn:hover {
+  background-color: #0056b3;
+}
+/* ĐỊNH DẠNG TÊN NGƯỜI GỬI */
+.sender-name {
+  font-size: 12px; /* CỠ CHỮ NHỎ */
+  color: #6c757d; /* MÀU CHỮ NHẸ HƠN */
+  margin-bottom: 3px; /* KHOẢNG CÁCH DƯỚI TÊN NGƯỜI GỬI */
+}
+
+/* ĐỊNH DẠNG NỘI DUNG TIN NHẮN */
+.message-content {
+  padding: 8px;
+  border-radius: 15px;
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+.message-sent .message-content {
+  align-self: flex-end;
+  background-color: #d1e7dd;
+  color: #0f5132;
+}
+
+.message-received .message-content {
+  align-self: flex-start;
+  background-color: #f8d7da;
+  color: #842029;
+}
+.file-upload-success {
+  opacity: 1;
+  cursor: pointer;
+}
+.file-uploadding {
+  opacity: 0.5;
+  cursor: no-drop;
+}

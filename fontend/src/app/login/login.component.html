@@ -1,0 +1,30 @@
+<div class="container">
+<div class="login-container">
+    <table>
+      <tbody>
+        <tr>
+          <td>Username</td>
+          <td><input [(ngModel)]="user.username" class="input-field"></td>
+        </tr>
+        <tr *ngIf="registFlag">
+          <td>Email</td>
+          <td><input type="email" [(ngModel)]="user.email" class="input-field"></td>
+        </tr>
+        <tr>
+          <td>Password</td>
+          <td><input type="password" [(ngModel)]="user.password" class="input-field"></td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <!-- <div *ngIf="!registFlag" class="forgot-password">
+      <a href="javascript:void" (click)="forgotPassword()">Forgot Password?</a>
+    </div> -->
+  
+    <div class="btn-submit">
+      <button class="submit-button" (click)="registUser()" *ngIf="registFlag">Register</button>
+      <button class="submit-button" (click)="login()" *ngIf="!registFlag">Login</button>
+      <button class="submit-button" (click)="goRegistUser()" *ngIf="!registFlag">Register</button>
+    </div>
+  </div>
+</div>

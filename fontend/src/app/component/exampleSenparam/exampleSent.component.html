@@ -1,0 +1,27 @@
+<div class="col-md-6 offset-md-3">
+    <form (ngSubmit) = "onSubmit()">
+        <table>
+            <tr>
+                <td>
+                    <label> Category Name</label>
+                </td>
+                <td>
+                    <app-custom-input [(value)]="category.categoryName" (focusout)="onFocusOut()"></app-custom-input>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label> Describe</label>
+                </td>
+                <td>
+                    <app-custom-input [(value)]="category.describe" (focusout)="onFocusOut()"></app-custom-input>
+                   
+                </td>
+            </tr>
+            
+        </table>
+       
+        <button class = "btn btn-success" type ="submit">Submit</button>
+    
+    </form>
+    </div> 
