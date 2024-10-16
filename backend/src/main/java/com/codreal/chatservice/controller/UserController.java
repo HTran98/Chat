@@ -1,8 +1,6 @@
 package com.codreal.chatservice.controller;
 
 import com.codreal.chatservice.dto.UserDto;
-import com.codreal.chatservice.exceptions.UserAlreadyExistException;
-import com.codreal.chatservice.exceptions.UserNotFoundException;
 import com.codreal.chatservice.model.User;
 import com.codreal.chatservice.services.UserService;
 import org.modelmapper.ModelMapper;
@@ -13,14 +11,14 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
-import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping ("/user")
 public class UserController {
 
     @Autowired
     private UserService userService;
+
     @Autowired
     private ModelMapper modelMapper;
 
@@ -33,22 +31,26 @@ public class UserController {
 //        }
 //    }
 
-    @PostMapping("/add")
+    @PostMapping ("/add")
     public ResponseEntity<User> addUser(@RequestBody User user) throws IOException {
-        try{
-            return new ResponseEntity<User>(userService.registerUser(user.getEmail(), user.getUsername() ,user.getPassword()), HttpStatus.OK);
-        }
-        catch (MessagingException e) {
+        try {
+            return new ResponseEntity<User>(
+                    userService.registerUser(user.getEmail(), user.getUsername(), user.getPassword()), HttpStatus.OK);
+        } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
     }
 
-    @GetMapping("/find-username")
+    @GetMapping ("/find-username")
     public ResponseEntity<UserDto> getUserByUserName(@RequestParam (name = "username") String username,
             @RequestParam (name = "password") String password) throws IOException {
-           User user = userService.findUserByUserName(username, password);
-           UserDto userDto = modelMapper.map(user,UserDto.class);
-            return new ResponseEntity<UserDto>(userDto, HttpStatus.OK);
+        User user = userService.findUserByUserName(username, password);
+        UserDto userDto = new UserDto() ;
+        if (user != null) {
+            userDto = modelMapper.map(user, UserDto.class);
+        }
+
+        return new ResponseEntity<UserDto>(userDto, HttpStatus.OK);
     }
 
 }

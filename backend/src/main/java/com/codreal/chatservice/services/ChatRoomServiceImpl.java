@@ -1,6 +1,7 @@
 package com.codreal.chatservice.services;
 
 import com.codreal.chatservice.dto.ChatRoomDto;
+import com.codreal.chatservice.dto.MemberDto;
 import com.codreal.chatservice.model.ChatRoom;
 import com.codreal.chatservice.repository.ChatRoomRepository;
 import com.codreal.chatservice.repository.MessageRepository;
@@ -23,6 +24,8 @@ public class ChatRoomServiceImpl implements ChatRoomService{
     @Autowired
     private MessageRepository messageRepository;
     private static final String CHAT_ROOM_SEQUENCE = "CHAT_ROOM_SEQUENCE";
+    private static final String STATUS_ADD = "ADD";
+    private static final String STATUS_REMOVE = "REMOVE";
     @Override
     public ChatRoomDto addRoom(ChatRoomDto chatRoomDto) {
 
@@ -44,11 +47,6 @@ public class ChatRoomServiceImpl implements ChatRoomService{
         List<ChatRoomDto> chatRoomListDto = chatRoomList.stream().map(chatRoom -> modelMapper.map(chatRoom,
                 ChatRoomDto.class)).collect(Collectors.toList());
         return chatRoomListDto;
-    }
-
-    @Override
-    public long countPersonInRoom() {
-        return messageRepository.countDistinctBySender();
     }
 
 }

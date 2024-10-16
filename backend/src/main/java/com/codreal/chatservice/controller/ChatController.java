@@ -1,6 +1,7 @@
 package com.codreal.chatservice.controller;
 
 
+import com.codreal.chatservice.dto.CountMemberDto;
 import com.codreal.chatservice.dto.MessageDto;
 import com.codreal.chatservice.model.Message;
 import com.codreal.chatservice.repository.MessageRepository;
@@ -20,16 +21,15 @@ public class ChatController {
     @MessageMapping ("/chat.sendMessage")
     @SendTo ("/topic/public")
     public MessageDto sendMessage(@Payload MessageDto chatMessage) {
-        chatMessage.setId(messageService.addMessge(chatMessage).getId()); ;
+        chatMessage.setId(messageService.addMessge(chatMessage).getId());
         return chatMessage;
     }
 
     @MessageMapping ("/chat.addUser")
     @SendTo ("/topic/public")
-    public MessageDto addUser(@Payload MessageDto chatMessage, SimpMessageHeaderAccessor headerAccessor) {
-        // Add username in web socket session
-        headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
-        return chatMessage;
+    public CountMemberDto addUser(@Payload CountMemberDto memberDto, SimpMessageHeaderAccessor headerAccessor) {
+
+        return memberDto;
     }
 
 }

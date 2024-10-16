@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ChatRoomRepository extends MongoRepository<ChatRoom,String> {
     List<ChatRoom> findByRoomNameContaining(String roomName);
+    ChatRoom findChatRoomByRoomId(String roomId);
 }
