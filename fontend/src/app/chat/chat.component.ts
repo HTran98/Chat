@@ -39,9 +39,9 @@ export class ChatComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.user = this.getItemWithExpiry('user');
     setInterval(() => {
-      console.log('tesst')
-      this.user = this.getItemWithExpiry('user');
+      this.getItemWithExpiry('user');
     }, 60 * 1000);
     this.webSocketService.connect();
 
