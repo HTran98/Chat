@@ -35,7 +35,7 @@ public class AuthController {
         VerificationToken verificationToken = tokenRepository.findToken(token);
         if(verificationToken != null){
             LocalDateTime time = LocalDateTime.now();
-            if(time.isBefore(verificationToken.getExpiryDate())){
+//            if(time.isBefore(verificationToken.getExpiryDate())){
                 User user = userService.getUserById(verificationToken.getUserId());
                 user.setVerified(true);
                 userService.saveUser(user);
@@ -45,11 +45,10 @@ public class AuthController {
                 HttpHeaders headers = new HttpHeaders();
                 headers.setLocation(loginUri);
                 return new ResponseEntity<>(headers, HttpStatus.SEE_OTHER);
-            }
+            //}
         }else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invalid token");
         }
-        return null;
     }
     @GetMapping ("/reset-password")
     public String resetPassword(@RequestParam String email) throws MessagingException {
