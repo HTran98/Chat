@@ -27,19 +27,28 @@ export class LoginComponent implements OnInit{
     });
   }
   login(){
-        this.loginService.findUser(this.user).subscribe((data) => {
+        this.loginService.findUser(this.user).subscribe((data: any) => {
           if(data){
-            const now = new Date();
-            // `TTL` (TIME TO LIVE) TÍNH BẰNG MILLISECONDS
-            const ttl = 30 * 60 * 1000
-            const item = {
-              value: data,
-              expiry: now.getTime() + ttl,
-            };
+            if(data.verified){
+              const now = new Date();
+              // `TTL` (TIME TO LIVE) TÍNH BẰNG MILLISECONDS
+              const ttl = 30 * 60 * 1000
+              const item = {
+                value: data,
+                expiry: now.getTime() + ttl,
+              };
+              
+              localStorage.setItem('user', JSON.stringify(item));
+              this.router.navigate(['chat'])
+            } else {
+              if(data.id){
+                alert("Account not verified")
+              }else{
+                alert("Name or password is incorrect")
+              }
+            } 
             
-            localStorage.setItem('user', JSON.stringify(item));
-            this.router.navigate(['chat'])
-          }
+          } 
         })
   }
   goRegistUser(){

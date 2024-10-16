@@ -16,19 +16,17 @@ export class WebSocketService {
     const socket = new SockJS('http://localhost:8080/ws');
     this.stompClient = new Client({
       webSocketFactory: () => socket as any,
-      debug: (str) => console.log(str),
+      // debug: (str) => console.log(str),
     });
 
     this.stompClient.onConnect = (frame) => {
-      console.log('Connected: ' + frame);
       this.stompClient.subscribe('/topic/public', (message: Message) => {
         this.onMessageReceived(message);
       });
     };
 
     this.stompClient.onStompError = (frame) => {
-      console.error('Broker reported error: ' + frame.headers['message']);
-      console.error('Additional details: ' + frame.body);
+
     };
 
     this.stompClient.activate();
@@ -37,7 +35,6 @@ export class WebSocketService {
   disconnect() {
     if (this.stompClient) {
       this.stompClient.deactivate();
-      console.log('Disconnected');
     }
   }
 
@@ -53,6 +50,17 @@ export class WebSocketService {
     };
     this.stompClient.publish({
       destination: '/app/chat.sendMessage',
+      body: JSON.stringify(chatMessage),
+    });
+  }
+  sendCountMember(roomId: string, countMember: number, type: string = 'COUNT') {
+    const chatMessage = {
+      roomId: roomId,
+      countMember : countMember,
+      type: type
+    };
+    this.stompClient.publish({
+      destination: '/app/chat.addUser',
       body: JSON.stringify(chatMessage),
     });
   }

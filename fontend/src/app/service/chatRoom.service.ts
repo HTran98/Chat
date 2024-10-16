@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {environment} from '../../enviroment/environment'
 import { ChatRoom } from '../model/ChatRoom';
+import { Member } from '../model/Member';
 @Injectable({
   providedIn: 'root'
 })
@@ -25,5 +26,15 @@ export class ChatRoomService {
             roomName: roomName
         }
     });
+  }
+  changeMember(member : Member): Observable<Object>{
+    return this.http.post(`${this.apiUrl}/room/change-member`, member)
+  }
+  getNumberMember(roomId : string): Observable<Object>{
+    return this.http.get(`${this.apiUrl}/room/count-member`,{
+      params :{
+        roomId : roomId
+      }
+    })
   }
 }

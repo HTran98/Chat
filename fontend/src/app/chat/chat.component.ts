@@ -8,6 +8,7 @@ import { ChatRoomService } from '../service/chatRoom.service';
 import { MessageService } from '../service/message.service';
 import { FileService } from '../service/file.service';
 import { Router } from '@angular/router';
+import { Member } from '../model/Member';
 
 @Component({
   selector: 'app-chat',
@@ -30,6 +31,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   currentPage: number = 1;
   totalPages: number = 0;
   upLoadFlag : boolean = false;
+  userCount : number = 0
   constructor(
     private webSocketService: WebSocketService,
     private chatRoomService: ChatRoomService,
@@ -49,8 +51,17 @@ export class ChatComponent implements OnInit, OnDestroy {
       .getMessage()
       .subscribe((message) => {
         if (message) {
+          console.log(message)
           let mes = JSON.parse(message);
-          this.messages.push(mes);
+          switch(mes.type){
+            case "CHAT": 
+            this.messages.push(mes);
+            break;
+            case "COUNT":
+              this.userCount = mes.countMember;
+              break;
+          }
+
         }
       });
     this.getAllRoom();
@@ -94,8 +105,22 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
   }
   chooseRoom(id: string) {
-    this.curentRoomId = id;
-    this.getMessInRoom(id);
+   
+    let member : Member = new Member();
+    member.roomId = id;
+    member.status = "JOIN"
+    member.userId = this.user.id
+    this.chatRoomService.changeMember(member).subscribe((data : any)=> {
+      if(data < 0){
+          alert("Chat room is full")
+      }else {
+        this.curentRoomId = id;
+        this.getMessInRoom(id);
+        this.userCount = data;
+        this.webSocketService.sendCountMember(this.curentRoomId,this.userCount)
+      }
+    })
+   
   }
   openDialog() {
     this.showPopup = true; // Mở popup
@@ -116,6 +141,13 @@ export class ChatComponent implements OnInit, OnDestroy {
         if (data) {
           let room = data as ChatRoom;
           this.curentRoomId = room.roomId;
+          let member : Member = new Member();
+          member.roomId = this.curentRoomId;
+          member.status = "JOIN"
+          member.userId = this.user.id
+          this.chatRoomService.changeMember(member).subscribe((data : any)=> {
+            
+          })
           this.getAllRoom();
         }
       });
@@ -235,5 +267,15 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
   
     return item.value;
+  }
+  leaveRoom(){
+    let member : Member = new Member();
+    member.roomId = this.curentRoomId;
+    member.status = "MOVE"
+    member.userId = this.user.id
+    this.chatRoomService.changeMember(member).subscribe((data : any)=> {
+      this.webSocketService.sendCountMember(this.curentRoomId,data)
+        this.curentRoomId = '';
+    })
   }
 }

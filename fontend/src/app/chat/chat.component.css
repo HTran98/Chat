@@ -304,3 +304,42 @@
   opacity: 0.5;
   cursor: no-drop;
 }
+.chat-header-left {
+  display: flex;
+  align-items: center; /* Căn giữa theo chiều dọc */
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-right: auto; /* Tạo khoảng cách cho nút Leave Room nằm ở bên phải */
+}
+
+.user-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}
+
+.chat-title {
+  flex-grow: 1; /* Để tiêu đề nằm ở giữa */
+  text-align: center;
+  margin: 0;
+}
+
+.leave-room-btn {
+  background-color: #f44336;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 10px; /* Tạo khoảng cách bên trái cho nút */
+}
+
+.leave-room-btn:hover {
+  background-color: #d32f2f;
+}
