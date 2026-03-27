@@ -17,7 +17,7 @@ public class EmailServiceImpl implements EmailService{
 
     @Override
     public void sendVerificationEmail(String toEmail, String token) throws MessagingException {
-        String url = "http://localhost:8080/api/auth/verify?token=" + token;
+        String url = "http://localhost:8080/auth/verify?token=" + token;
 
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);

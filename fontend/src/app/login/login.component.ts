@@ -16,20 +16,21 @@ export class LoginComponent implements OnInit{
   user : User = new User()
   registFlag : boolean = false
   constructor(private loginService: LoginService, private router: Router) {
-      
+
   }
   ngOnInit(): void {
-    
+
   }
   registUser (){
     this.loginService.createUser(this.user).subscribe((data) => {
-      
+
     });
   }
   login(){
         this.loginService.findUser(this.user).subscribe((data: any) => {
           if(data){
-            if(data.verified){
+            console.log(data)
+            if(data.username){
               const now = new Date();
               // `TTL` (TIME TO LIVE) TÍNH BẰNG MILLISECONDS
               const ttl = 30 * 60 * 1000
@@ -37,7 +38,7 @@ export class LoginComponent implements OnInit{
                 value: data,
                 expiry: now.getTime() + ttl,
               };
-              
+
               localStorage.setItem('user', JSON.stringify(item));
               this.router.navigate(['chat'])
             } else {
@@ -46,9 +47,9 @@ export class LoginComponent implements OnInit{
               }else{
                 alert("Name or password is incorrect")
               }
-            } 
-            
-          } 
+            }
+
+          }
         })
   }
   goRegistUser(){
